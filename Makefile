@@ -10,52 +10,23 @@ CYAN =   \033[0;36m
 BOLD =   \033[0;1m
 WHITE =  \033[0;0m
 
-# Functions
+# Variables
 
-SIZE = 50
-
-define print_section
-	@echo "$(PURPLE)"
-	@word_len=$$(echo -n $1 | wc -c); \
-	line_len=$$(($(SIZE) - word_len / 2)); \
-	for i in $$(seq 1 $$line_len); do \
-		echo -n ' '; \
-	done; \
-	echo -n "╔"; \
-	for i in $$(seq 1 $$((word_len + 4))); do \
-		echo -n '═'; \
-	done; \
-	echo -n "╗"; \
-	echo; \
-	for i in $$(seq 1 $$line_len); do \
-		echo -n '═'; \
-	done; \
-	echo -n "╣ " $1 " ╠"; \
-	for i in $$(seq 1 $$line_len); do \
-		echo -n '═'; \
-	done; \
-	echo; \
-	for i in $$(seq 1 $$line_len); do \
-		echo -n ' '; \
-	done; \
-	echo -n "╚"; \
-	for i in $$(seq 1 $$((word_len + 4))); do \
-		echo -n '═'; \
-	done; \
-	echo -n "╝"; \
-	echo "$(WHITE)"
-endef
+DOCKER_COMPOSE_DIR = ./srcs/docker-compose.yml
 
 # Rules
 
-all: title
+all: title up
+
+up:
+	docker-compose -f $(DOCKER_COMPOSE_DIR) up -d
+
+down:
+	docker-compose -f $(DOCKER_COMPOSE_DIR) down
+	docker system prune -a --force
 
 status:
-	$(call print_section,CONTAINERS)
 	@docker ps -a | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'
-	@echo "                            "
-	$(call print_section,IMAGES)
-	@echo "$(WHITE)"
 	@docker images | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'
 
 title:
@@ -67,4 +38,4 @@ title:
 	@echo "$(CYAN)"     "╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝╚═╝        ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝"
 	@echo               "\nby: aarrien-\n" "$(WHITE)"
 
-.PHONY: all status title
+.PHONY: all up down status title
