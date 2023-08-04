@@ -2,6 +2,9 @@ version: '3.7'
 
 services:
   nginx:
+    container_name: nginx
     build: ./requirements/nginx
+    image: nginx:custom
+    restart: on-failure
     ports:
-      - 443:443
+      - "443:443"

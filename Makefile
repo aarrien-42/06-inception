@@ -19,15 +19,21 @@ DOCKER_COMPOSE_DIR = ./srcs/docker-compose.yml
 all: title up
 
 up:
-	docker-compose -f $(DOCKER_COMPOSE_DIR) up -d
+	docker-compose -f $(DOCKER_COMPOSE_DIR) up --build -d
 
-down:
+clean:
 	docker-compose -f $(DOCKER_COMPOSE_DIR) down
+
+fclean: clean
 	docker system prune -a --force
+
+re: down up
 
 status:
 	@docker ps -a | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'
 	@docker images | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'
+	@docker volume ls | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'
+	@docker network ls | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'
 
 title:
 	@echo "\n$(PURPLE)" "██╗███╗   ██╗ ██████╗███████╗██████╗ ████████╗██╗ ██████╗ ███╗   ██╗"
