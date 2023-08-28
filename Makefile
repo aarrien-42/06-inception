@@ -27,7 +27,7 @@ clean:
 fclean: clean
 	docker system prune -a --force
 
-re: down up
+re: fclean up
 
 status:
 	@docker ps -a | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'
@@ -44,4 +44,4 @@ title:
 	@echo "$(CYAN)"     "╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝╚═╝        ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝"
 	@echo               "\nby: aarrien-\n" "$(WHITE)"
 
-.PHONY: all up down status title
+.PHONY: all up clean fclean re status title
