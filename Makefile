@@ -22,7 +22,7 @@ up:
 	docker-compose -f $(DOCKER_COMPOSE_DIR) up --build -d
 
 clean:
-	docker-compose -f $(DOCKER_COMPOSE_DIR) down
+	docker-compose -f $(DOCKER_COMPOSE_DIR) down -v
 
 fclean: clean
 	docker system prune -a --force
