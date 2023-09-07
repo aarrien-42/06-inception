@@ -1,8 +1,11 @@
 version: '3.7'
 
 services:
+
   nginx:
     container_name: nginx
+    depends_on:
+      - wordpress
     build: ./requirements/nginx
     image: nginx
     restart: on-failure
@@ -10,15 +13,24 @@ services:
       - "443:443"
     networks:
       - inception_network
+
+  wordpress:
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    build: ./requirements/wordpress
+    image: wordpress
+    restart: on-failure
+    env_file: .env
+    networks:
+      - inception_network
+
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
     image: mariadb
     restart: on-failure
-    env_file:
-      - .env
-    environment:
-      MYSQL_ROOT_HOST: '%'
+    env_file: .env
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
@@ -32,6 +44,12 @@ networks:
 volumes:
   mariadb_data:
     name: mariadb_data
+    driver_opts:
+      type: volume
+      device: /home/aarrien/data/mariadb
   wordpress_data:
     name: wordpress_data
+    driver_opts:
+      type: volume
+      device: /home/aarrien/data/wordpress
 

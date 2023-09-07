@@ -11,7 +11,6 @@ COPY /tools/openssl.key /etc/nginx/openssl.key
 #    -out /etc/nginx/openssl.crt \
 #    -subj "/C=SP/ST=Madrid/L=Madrid/O=42/OU=IT/CN=aarrien.42.fr/"
 
-# muestra errores
 RUN nginx -t
 
 EXPOSE 443
