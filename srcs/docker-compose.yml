@@ -15,10 +15,10 @@ services:
     build: ./requirements/mariadb
     image: mariadb
     restart: on-failure
-    ports:
-      - "3306:3306"
     env_file:
       - .env
+    environment:
+      MYSQL_ROOT_HOST: '%'
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
