@@ -1,15 +1,24 @@
 FROM alpine:3.18.2
 
-RUN apk update && apk upgrade && apk add --no-cache wget php81 php-fpm81
-
-RUN wget -O /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz && tar -xzvf /tmp/wordpress.tar.gz -C /tmp
-
-RUN cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
-RUN mkdir -p /var/www/wordpress && cp -a /tmp/wordpress/. /var/www/wordpress && rm -rf /tmp/*
-
-COPY /conf/www.conf /etc/php81/php-fpm.d/www.conf
-RUN ls -la /usr/sbin
-
 EXPOSE 9000
 
-CMD ["php-fpm81", "-F", "-R"]
+# All the setup and installation logic
+RUN apk update && apk upgrade && apk --no-cache add wget curl php81-fpm php81-mysqli php81-cli php81-phar mariadb-client
+
+# Copy configurations
+COPY /conf/www.conf /etc/php81/php-fpm.d/www.conf
+
+# WordPress download and setup
+RUN wget -O /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz && tar -xzvf /tmp/wordpress.tar.gz -C /tmp
+RUN cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+RUN mkdir -p /var/www/wordpress && cp -a /tmp/wordpress/. /var/www/wordpress && rm -rf tmp/*
+
+# WP-CLI setup
+RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar --output /usr/bin/wp --silent && chmod +x /usr/bin/wp
+
+# Your initialization script
+COPY ./conf/script.sh /tmp/script.sh
+RUN chmod +x /tmp/script.sh
+
+# The command that'll run when the container starts
+CMD ["sh", "/tmp/script.sh"]

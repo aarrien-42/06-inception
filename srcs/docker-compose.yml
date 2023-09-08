@@ -22,6 +22,8 @@ services:
     image: wordpress
     restart: on-failure
     env_file: .env
+    volumes:
+      - /home/aarrien/data/wordpress:/var/www/wordpress
     networks:
       - inception_network
 
@@ -32,7 +34,7 @@ services:
     restart: on-failure
     env_file: .env
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - /home/aarrien/data/mariadb:/var/lib/mysql
     networks:
       - inception_network
 

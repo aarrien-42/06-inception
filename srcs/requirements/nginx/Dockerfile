@@ -1,7 +1,11 @@
 FROM alpine:3.18.2
 
+EXPOSE 443
+
+# All the setup and installation logic
 RUN apk update && apk upgrade && apk --no-cache add nginx openssl
 
+# Copy configurations
 COPY /conf/nginx.conf /etc/nginx/nginx.conf
 COPY /tools/openssl.crt /etc/nginx/openssl.crt
 COPY /tools/openssl.key /etc/nginx/openssl.key
@@ -13,6 +17,5 @@ COPY /tools/openssl.key /etc/nginx/openssl.key
 
 RUN nginx -t
 
-EXPOSE 443
-
+# The command that'll run when the container starts
 CMD ["nginx", "-g", "daemon off;"]
