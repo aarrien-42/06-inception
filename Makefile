@@ -18,16 +18,22 @@ DOCKER_COMPOSE_DIR = ./srcs/docker-compose.yml
 
 all: title up
 
-up:
+up: setup-dirs
 	docker-compose -f $(DOCKER_COMPOSE_DIR) up --build -d
 
 clean:
+	sudo rm -rf ../data
 	docker-compose -f $(DOCKER_COMPOSE_DIR) down -v
 
 fclean: clean
 	docker system prune -a --force
 
 re: fclean up
+
+setup-dirs:
+	@if [ ! -d ../data/mariadb ]; then mkdir -p ../data/mariadb; fi
+	@if [ ! -d ../data/wordpress ]; then mkdir -p ../data/wordpress; fi
+	@chmod 777 ../data ../data/mariadb ../data/wordpress
 
 status:
 	@docker ps -a | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'

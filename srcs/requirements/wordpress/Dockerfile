@@ -1,4 +1,4 @@
-FROM alpine:3.18.2
+FROM alpine:3.17
 
 EXPOSE 9000
 
@@ -9,14 +9,14 @@ RUN apk update && apk upgrade && apk --no-cache add wget curl php81-fpm php81-my
 COPY /conf/www.conf /etc/php81/php-fpm.d/www.conf
 
 # WordPress download and setup
-RUN wget -O /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz && tar -xzvf /tmp/wordpress.tar.gz -C /tmp
-RUN cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
-RUN mkdir -p /var/www/wordpress && cp -a /tmp/wordpress/. /var/www/wordpress && rm -rf tmp/*
+#RUN wget -O /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz && tar -xzvf /tmp/wordpress.tar.gz -C /tmp
+#RUN cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+#RUN mkdir -p /var/www/wordpress && cp -a /tmp/wordpress/. /var/www/wordpress && rm -rf tmp/*
 
 # WP-CLI setup
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar --output /usr/bin/wp --silent && chmod +x /usr/bin/wp
 
-# Your initialization script
+# Initialization script
 COPY ./conf/script.sh /tmp/script.sh
 RUN chmod +x /tmp/script.sh
 
