@@ -1,5 +1,7 @@
 cd /var/www/wordpress/
 
+sleep 10
+
 wp core download --locale=es_ES --allow-root --force
 
 wp config create --path=/var/www/wordpress --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=${MYSQL_HOST} --locale=es_ES --allow-root --skip-check
