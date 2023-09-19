@@ -18,8 +18,11 @@ DOCKER_COMPOSE_DIR = ./srcs/docker-compose.yml
 
 all: title up
 
-up: setup-dirs
-	docker-compose -f $(DOCKER_COMPOSE_DIR) up --build -d
+build:
+	docker-compose -f $(DOCKER_COMPOSE_DIR) build
+
+up: setup-dirs build
+	docker-compose -f $(DOCKER_COMPOSE_DIR) up -d
 
 clean:
 	@if [ -d $(HOME)/data ]; then sudo rm -rf $(HOME)/data; fi
@@ -50,4 +53,4 @@ title:
 	@echo "$(CYAN)"     "╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝╚═╝        ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝"
 	@echo               "\nby: aarrien-\n" "$(WHITE)"
 
-.PHONY: all up clean fclean re status title
+.PHONY: all build up clean fclean re setup-dirs status title
