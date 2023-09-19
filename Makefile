@@ -22,7 +22,7 @@ up: setup-dirs
 	docker-compose -f $(DOCKER_COMPOSE_DIR) up --build -d
 
 clean:
-	@if [ ! -d ../data ]; then sudo rm -rf ../data; fi
+	@if [ -d $(HOME)/data ]; then sudo rm -rf $(HOME)/data; fi
 	docker-compose -f $(DOCKER_COMPOSE_DIR) down -v
 
 fclean: clean
@@ -31,9 +31,9 @@ fclean: clean
 re: fclean up
 
 setup-dirs:
-	@if [ ! -d ../data ]; then mkdir -p ../data/mariadb ../data/wordpress; fi
-	@chown -R aarrien:aarrien ../data/mariadb ../data/wordpress
-	@chmod 777 ../data ../data/mariadb ../data/wordpress
+	@if [ ! -d $(HOME)/data ]; then mkdir -p $(HOME)/data/mariadb $(HOME)/data/wordpress; fi
+	@chown -R $(USER):$(USER) $(HOME)/data/mariadb $(HOME)/data/wordpress
+	@chmod 777 $(HOME)/data $(HOME)/data/mariadb $(HOME)/data/wordpress
 
 status:
 	@docker ps -a | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'
