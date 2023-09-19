@@ -14,8 +14,5 @@ RUN openssl req -x509 -days 365 -nodes -newkey rsa:4096 -sha256 \
     -out /etc/nginx/openssl.crt \
     -subj "/CN=aarrien.42.fr/"
 
-# Check configuration file
-#RUN nginx -t
-
 # The command that'll run when the container starts
 CMD ["nginx", "-g", "daemon off;"]
