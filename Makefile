@@ -12,26 +12,30 @@ WHITE =  \033[0;0m
 
 # Variables
 
-DOCKER_COMPOSE_DIR = ./srcs/docker-compose.yml
+DC = docker-compose
+DC_DIR = ./srcs/docker-compose.yml
 
 # Rules
 
 all: title up
 
 build:
-	docker-compose -f $(DOCKER_COMPOSE_DIR) build
+	$(DC) -f $(DC_DIR) build
 
 up: setup-dirs build
-	docker-compose -f $(DOCKER_COMPOSE_DIR) up -d
+	$(DC) -f $(DC_DIR) up -d
 
-clean:
+down:
+	$(DC) -f $(DC_DIR) down
+
+fclean: down
 	@if [ -d $(HOME)/data ]; then sudo rm -rf $(HOME)/data; fi
-	docker-compose -f $(DOCKER_COMPOSE_DIR) down -v
-
-fclean: clean
+	$(DC) -f $(DC_DIR) down -v
 	docker system prune -a --force
 
-re: fclean up
+re: down up
+
+rebuild: fclean up
 
 setup-dirs:
 	@if [ ! -d $(HOME)/data ]; then mkdir -p $(HOME)/data/mariadb $(HOME)/data/wordpress; \
@@ -53,4 +57,4 @@ title:
 	@echo "$(CYAN)"     "╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝╚═╝        ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝"
 	@echo               "\nby: aarrien-\n" "$(WHITE)"
 
-.PHONY: all build up clean fclean re setup-dirs status title
+.PHONY: all build up down clean fclean re rebuild setup-dirs status title
