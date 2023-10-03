@@ -3,7 +3,7 @@ FROM alpine:3.17
 EXPOSE 9000
 
 # All the setup and installation logic
-RUN apk update && apk upgrade && apk --no-cache add wget curl php81-fpm php81-mysqli php81-cli php81-phar mariadb-client
+RUN apk update && apk upgrade && apk --no-cache add wget curl php81-fpm php81-mysqli php81-cli php81-phar mariadb-client fcgi
 
 RUN addgroup www && adduser -D -G www php
 
@@ -16,7 +16,9 @@ RUN cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
 RUN mkdir -p /var/www/html && cp -a /tmp/wordpress/. /var/www/html && rm -rf tmp/*
 
 # WP-CLI setup
-RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar --output /usr/bin/wp --silent && chmod +x /usr/bin/wp
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/bin/wp
 
 # Initialization script
 COPY ./conf/script.sh /tmp/script.sh
