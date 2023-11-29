@@ -39,6 +39,7 @@ rebuild: fclean up
 
 setup-dirs:
 	@if [ ! -d $(HOME)/data ]; then mkdir -p $(HOME)/data/mariadb $(HOME)/data/wordpress; \
+	chown -R $(USER):$(USER) $(HOME)/data/mariadb $(HOME)/data/wordpress; \
 	chmod -R 777 $(HOME)/data; fi
 
 status:
