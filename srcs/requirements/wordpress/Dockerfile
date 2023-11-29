@@ -11,9 +11,9 @@ RUN addgroup www && adduser -D -G www php
 COPY /conf/www.conf /etc/php81/php-fpm.d/www.conf
 
 # WordPress download and setup
-RUN wget -O /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz && tar -xzvf /tmp/wordpress.tar.gz -C /tmp
-RUN cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
-RUN mkdir -p /var/www/html && cp -a /tmp/wordpress/. /var/www/html && rm -rf tmp/*
+#RUN wget -O /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz && tar -xzvf /tmp/wordpress.tar.gz -C /tmp
+#RUN cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+#RUN mkdir -p /var/www/html && cp -a /tmp/wordpress/. /var/www/html && rm -rf tmp/*
 
 # WP-CLI setup
 RUN mkdir -p /usr/bin/wp
