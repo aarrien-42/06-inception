@@ -3,28 +3,7 @@ FROM alpine:3.17
 EXPOSE 9000
 
 # All the setup and installation logic
-RUN apk update && apk upgrade && apk --no-cache add wget curl mysql-client fcgi \
-    php81 \
-    php81-fpm \
-    php81-mysqli \
-    php81-json \
-    php81-openssl \
-    php81-curl \
-    php81-zlib \
-    php81-xml \
-    php81-phar \
-    php81-intl \
-    php81-dom \
-    php81-xmlreader \
-    php81-xmlwriter \
-    php81-simplexml \
-    php81-tokenizer \
-    php81-ctype \
-    php81-session \
-    php81-mbstring \
-    php81-gd \
-    php81-opcache \
-    php81-fileinfo
+RUN apk update && apk upgrade && apk --no-cache add wget curl php81 php81-fpm php81-openssl php81-curl php81-mysqli php81-iconv php81-phar mysql-client fcgi \
 
 RUN addgroup www && adduser -D -G www php
 
