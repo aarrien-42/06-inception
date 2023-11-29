@@ -1,5 +1,26 @@
 version: '3.7'
 
+networks:
+  inception_network:
+    name: inception_network
+    driver: bridge
+
+volumes:
+  mariadb_data:
+    name: mariadb_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/mariadb
+  wordpress_data:
+    name: wordpress_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/wordpress
+
 services:
 
   nginx:
@@ -38,23 +59,3 @@ services:
     networks:
       - inception_network
 
-networks:
-  inception_network:
-    name: inception_network
-    driver: bridge
-
-volumes:
-  mariadb_data:
-    name: mariadb_data
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${HOME}/data/mariadb
-  wordpress_data:
-    name: wordpress_data
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${HOME}/data/wordpress
