@@ -13,7 +13,7 @@ wp core install --path=/var/www/html --url=localhost --title="INCEPTION" --admin
 
 wp theme activate "twentytwentytwo"
 
-cat << EOF >> ./var/www/html/wp-content/plugins/akismet/.htaccess
+cat << EOF >> /var/www/html/wp-content/plugins/akismet/.htaccess
 
 RewriteEngine On
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
