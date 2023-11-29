@@ -13,4 +13,6 @@ wp core install --path=/var/www/html --url=localhost --title="INCEPTION" --admin
 
 wp theme activate "twentytwentytwo"
 
+echo "define( 'WP_MEMORY_LIMIT', '512M' );" >> /var/www/html/wp-config.php
+
 php-fpm81 --nodaemonize
