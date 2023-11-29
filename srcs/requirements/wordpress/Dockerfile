@@ -18,7 +18,7 @@ RUN mkdir -p /var/www/html && cp -a /tmp/wordpress/. /var/www/html && rm -rf tmp
 # WP-CLI setup
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
-RUN mkdir -p /urs/bin/wp && mv wp-cli.phar /usr/bin/wp
+RUN mkdir -p /urs/bin/wp && mv wp-cli.phar /usr/bin/wp/wp-cli.phar
 
 # Initialization script
 COPY ./conf/script.sh /tmp/script.sh
