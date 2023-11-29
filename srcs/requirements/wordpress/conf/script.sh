@@ -15,6 +15,8 @@ wp theme activate "twentytwentytwo"
 
 cat << EOF > /var/www/html/wp-content/plugins/akismet/.htaccess
 
+RewriteRule ^wp-admin$ http://aarrien.42.fr/wp-login.php [NC,L]
+
 RewriteEngine On
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteBase /
