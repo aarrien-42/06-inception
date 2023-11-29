@@ -24,7 +24,7 @@ RUN apk update && apk upgrade && apk --no-cache add wget curl mysql-client fcgi 
     php81-mbstring \
     php81-gd \
     php81-opcache \
-    php81-fileinfo \
+    php81-fileinfo
 
 RUN addgroup www && adduser -D -G www php
 
