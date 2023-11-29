@@ -3,6 +3,7 @@ while ! nc -z mariadb 3306; do
 done
 
 mkdir -p /var/www/html
+cd /var/www/html
 
 #sed -i "s/database_name_here/${MYSQL_DATABASE}/g" /var/www/html/wp-config.php
 #sed -i "s/username_here/${MYSQL_USER}/g" /var/www/html/wp-config.php
