@@ -39,8 +39,7 @@ rebuild: fclean up
 
 setup-dirs:
 	@if [ ! -d $(HOME)/data ]; then mkdir -p $(HOME)/data/mariadb $(HOME)/data/wordpress; \
-	chown -R $(USER):$(USER) $(HOME)/data/mariadb $(HOME)/data/wordpress; \
-	chmod 777 $(HOME)/data $(HOME)/data/mariadb $(HOME)/data/wordpress; fi
+	chmod -R 777 $(HOME)/data; fi
 
 status:
 	@docker ps -a | awk '{printf "$(BLUE)"} NR==1 {print $1;next} {printf "$(WHITE)"} {print}'
