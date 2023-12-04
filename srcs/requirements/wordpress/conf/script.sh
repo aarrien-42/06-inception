@@ -5,7 +5,7 @@ done
 mkdir -p /var/www/html
 cd /var/www/html
 
-wp core download --allow-root
+wp core download --locale=es_ES --allow-root
 
 wp config create --path=/var/www/html --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=$MYSQL_HOST --locale=es_ES --allow-root --skip-check
 
